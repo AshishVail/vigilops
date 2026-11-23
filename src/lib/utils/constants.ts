@@ -1,0 +1,9 @@
+export const APP_NAME = "VigilOps";
+export const APP_TAGLINE = "Monitor. Test. Secure. Resolve.";
+export const APP_URL = "https://vigilops.nexovent.tech";
+export const SUPPORT_EMAIL = "contact@nexovent.tech";
+export const MAX_MONITOR_COUNT = 25;
+export const MIN_MONITOR_INTERVAL_SECONDS = 300;
+export const MAX_MONITOR_TIMEOUT_MS = 10000;
+export const MAX_PROXY_RESPONSE_BYTES = 1_048_576;
+export const DEMO_WORKSPACE_TTL_HOURS = 24;

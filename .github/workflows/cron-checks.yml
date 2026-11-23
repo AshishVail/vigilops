@@ -1,0 +1,26 @@
+name: VigilOps 5-Minute Monitor Checks
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Run VigilOps monitor sweep
+        env:
+          CRON_URL: https://vigilops.nexovent.tech/api/cron/check-all
+        run: |
+          response="$(curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            --header "Content-Type: application/json" \
+            --max-time 300 \
+            "$CRON_URL")"
+          printf '%s\n' "$response"

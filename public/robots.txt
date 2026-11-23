@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /monitors
+Disallow: /observatory
+Disallow: /security
+Disallow: /incidents
+Disallow: /alerts
+Disallow: /logs
+Disallow: /ai
+Disallow: /settings
+
+Sitemap: https://vigilops.nexovent.tech/sitemap.xml
