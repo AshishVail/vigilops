@@ -14,15 +14,19 @@ export async function GET(request: NextRequest) {
 
   let monitorQuery = auth.supabase.from("monitors").select("*").order("created_at", { ascending: false });
   if (projectId) {
-    const { data: project } = await auth.supabase.from("projects").select("workspace_id").eq("id", projectId).maybeSingle();
+    const { data: project, error: projectError } = await auth.supabase.from("projects").select("workspace_id").eq("id", projectId).maybeSingle();
+    if (projectError) return errorJson(projectError.message, 500, "PROJECT_LOOKUP_FAILED");
     if (!project) return forbiddenJson();
-    const { data: membership } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", project.workspace_id).eq("user_id", auth.user.id).maybeSingle();
+    const { data: membership, error: membershipError } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", project.workspace_id).eq("user_id", auth.user.id).maybeSingle();
+    if (membershipError) return errorJson(membershipError.message, 500, "WORKSPACE_ACCESS_FAILED");
     if (!membership) return forbiddenJson();
     monitorQuery = monitorQuery.eq("project_id", projectId);
   } else if (workspaceId) {
-    const { data: membership } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", workspaceId).eq("user_id", auth.user.id).maybeSingle();
+    const { data: membership, error: membershipError } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", workspaceId).eq("user_id", auth.user.id).maybeSingle();
+    if (membershipError) return errorJson(membershipError.message, 500, "WORKSPACE_ACCESS_FAILED");
     if (!membership) return forbiddenJson();
-    const { data: projects } = await auth.supabase.from("projects").select("id").eq("workspace_id", workspaceId);
+    const { data: projects, error: projectsError } = await auth.supabase.from("projects").select("id").eq("workspace_id", workspaceId);
+    if (projectsError) return errorJson(projectsError.message, 500, "PROJECT_LIST_FAILED");
     const projectIds = (projects ?? []).map((project) => project.id);
     monitorQuery = projectIds.length ? monitorQuery.in("project_id", projectIds) : monitorQuery.in("project_id", ["00000000-0000-0000-0000-000000000000"]);
   }
@@ -39,13 +43,23 @@ export async function POST(request: NextRequest) {
   const parsed = createMonitorSchema.safeParse(body);
   if (!parsed.success) return errorJson("Invalid monitor data", 400, "VALIDATION_ERROR");
 
-  const { data: project } = await auth.supabase.from("projects").select("workspace_id").eq("id", parsed.data.projectId).maybeSingle();
+  const { data: project, error: projectError } = await auth.supabase.from("projects").select("workspace_id").eq("id", parsed.data.projectId).maybeSingle();
+  if (projectError) return errorJson(projectError.message, 500, "PROJECT_LOOKUP_FAILED");
   if (!project) return forbiddenJson();
-  const { data: membership } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", project.workspace_id).eq("user_id", auth.user.id).maybeSingle();
+  const { data: membership, error: membershipError } = await auth.supabase.from("workspace_members").select("role").eq("workspace_id", project.workspace_id).eq("user_id", auth.user.id).maybeSingle();
+  if (membershipError) return errorJson(membershipError.message, 500, "WORKSPACE_ACCESS_FAILED");
   if (!membership || !["owner", "admin", "member"].includes(membership.role)) return forbiddenJson();
 
-  const { count, error: countError } = await auth.supabase.from("monitors").select("id", { count: "exact", head: true }).in("project_id",
-    ((await auth.supabase.from("projects").select("id").eq("workspace_id", project.workspace_id)).data ?? []).map((item) => item.id));
+  const { data: workspaceProjects, error: workspaceProjectsError } = await auth.supabase
+    .from("projects")
+    .select("id")
+    .eq("workspace_id", project.workspace_id);
+  if (workspaceProjectsError) return errorJson(workspaceProjectsError.message, 500, "PROJECT_LIST_FAILED");
+
+  const { count, error: countError } = await auth.supabase
+    .from("monitors")
+    .select("id", { count: "exact", head: true })
+    .in("project_id", (workspaceProjects ?? []).map((item) => item.id));
   if (countError) return errorJson(countError.message, 500, "MONITOR_COUNT_FAILED");
   if ((count ?? 0) >= 25) return errorJson("A workspace cannot contain more than 25 monitors", 409, "MONITOR_LIMIT_REACHED");
 

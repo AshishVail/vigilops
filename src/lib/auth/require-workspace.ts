@@ -30,7 +30,8 @@ export async function requireWorkspace(workspaceId: string, minimumRole?: Worksp
     .eq("user_id", auth.user.id)
     .maybeSingle();
 
-  if (error || !membership) return null;
+  if (error) throw new Error(`Workspace membership lookup failed: ${error.message}`);
+  if (!membership) return null;
   if (minimumRole && roleHierarchy[membership.role] < roleHierarchy[minimumRole]) {
     return null;
   }
@@ -53,7 +54,8 @@ export async function requireWorkspaceBySlug(slug: string) {
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error || !workspace) return null;
+  if (error) throw new Error(`Workspace lookup failed: ${error.message}`);
+  if (!workspace) return null;
   const access = await requireWorkspace(workspace.id);
   if (!access) return null;
   return { workspace, ...access };

@@ -23,6 +23,7 @@ async function readJson<T>(response: Response): Promise<T> {
 
 export function useWorkspaces() {
   const setWorkspace = useWorkspaceStore((state) => state.setWorkspace);
+  const clearWorkspace = useWorkspaceStore((state) => state.clear);
   const currentId = useWorkspaceStore((state) => state.workspaceId);
   const query = useQuery({
     queryKey: ["workspaces"],
@@ -33,12 +34,18 @@ export function useWorkspaces() {
   });
 
   useEffect(() => {
-    if (!query.data?.length) return;
-    if (!currentId) {
-      const membership = query.data[0];
+    if (!query.isSuccess) return;
+
+    const currentMembership = query.data.find(({ workspace }) => workspace.id === currentId);
+    if (currentMembership) return;
+
+    const membership = query.data[0];
+    if (membership) {
       setWorkspace(membership.workspace.id, membership.workspace.slug);
+    } else if (currentId) {
+      clearWorkspace();
     }
-  }, [query.data, currentId, setWorkspace]);
+  }, [query.data, query.isSuccess, currentId, setWorkspace, clearWorkspace]);
 
   return query;
 }
