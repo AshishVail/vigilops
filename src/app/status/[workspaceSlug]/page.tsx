@@ -11,12 +11,12 @@ export default async function PublicStatusPage({ params }: { params: Promise<{ w
   if (!status) notFound();
 
   return (
-    <main className="min-h-screen bg-[#07090D] text-slate-100">
+    <main className="min-h-screen bg-white text-slate-900">
       <StatusHeader status={status}/>
       <div className="mx-auto max-w-5xl px-5 py-10 lg:px-8">
         <div className="mb-6 flex items-end justify-between gap-4"><div><p className="font-mono text-xs uppercase tracking-[0.18em] text-slate-600">Services</p><h1 className="mt-2 text-2xl font-semibold tracking-tight">Current operational status</h1></div><SubscribeButton/></div>
         <div className="space-y-3">{status.monitors.map((monitor)=><PublicMonitorCard key={monitor.name} monitor={monitor}/>)}</div>
-        {status.monitors.length===0&&<p className="rounded-xl border border-[#1F2633] bg-[#0E121A] py-12 text-center text-sm text-slate-600">No public services are currently configured.</p>}
+        {status.monitors.length===0&&<p className="rounded-xl border border-slate-200 bg-white py-12 text-center text-sm text-slate-600">No public services are currently configured.</p>}
         <div className="mt-6"><PublicIncidents incidents={status.incidents}/></div>
       </div>
     </main>

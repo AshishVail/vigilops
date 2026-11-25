@@ -14,7 +14,7 @@ export function IncidentUpdateForm({ incident }: { incident: Incident }) {
   const [message, setMessage] = useState("");
 
   return (
-    <div className="space-y-4 rounded-xl border border-[#1F2633] bg-[#0E121A] p-5">
+    <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-5">
       <div className="space-y-2">
         <Label htmlFor="incident-status">Workflow status</Label>
         <Select id="incident-status" value={status} onChange={(event) => setStatus(event.target.value as Incident["status"])}>

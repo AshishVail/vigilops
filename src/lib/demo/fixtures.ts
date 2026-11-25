@@ -5,7 +5,7 @@ export const demoMonitors = [
 ];
 
 export const demoProjects = [
-  { name: "Core Platform", description: "Production services monitored in the live demo.", color: "#7C3AED", publicStatusEnabled: true },
+  { name: "Core Platform", description: "Production services monitored in the live demo.", color: "#6366F1", publicStatusEnabled: true },
 ];
 
 export const demoSecurityFinding = {

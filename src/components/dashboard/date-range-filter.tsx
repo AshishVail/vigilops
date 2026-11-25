@@ -8,9 +8,9 @@ export function DateRangeFilter({ value, onChange }: { value: DashboardRange; on
     { value: "30d", label: "30d" },
   ];
   return (
-    <div className="inline-flex rounded-lg border border-[#1F2633] bg-[#0E121A] p-1">
+    <div className="inline-flex rounded-lg border border-slate-200 bg-white p-1">
       {options.map((option) => (
-        <button key={option.value} onClick={() => onChange(option.value)} className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${value === option.value ? "bg-[#181C27] text-white" : "text-slate-500 hover:text-slate-300"}`}>{option.label}</button>
+        <button key={option.value} onClick={() => onChange(option.value)} className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${value === option.value ? "bg-indigo-600 text-white" : "text-slate-600 hover:text-slate-600"}`}>{option.label}</button>
       ))}
     </div>
   );

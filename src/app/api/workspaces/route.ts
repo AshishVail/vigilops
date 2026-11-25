@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       workspace_id: workspace.id,
       name: "Core Platform",
       description: "Default production observability project.",
-      color: "#7C3AED",
+      color: "#6366F1",
       public_status_enabled: parsed.data.publicStatusEnabled,
     })
     .select("*")

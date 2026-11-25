@@ -16,7 +16,7 @@ export function WorkspaceSwitcher() {
       </span>
       <Select
         aria-label="Active workspace"
-        className="h-8 max-w-40 border-transparent bg-transparent px-1 text-slate-300 hover:bg-white/[0.04]"
+        className="h-8 max-w-40 border-transparent bg-transparent px-1 text-slate-600 hover:bg-slate-100"
         disabled={workspaces.isLoading || !workspaces.data?.length}
         value={workspaceId ?? ""}
         onChange={(event) => {

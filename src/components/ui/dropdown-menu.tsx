@@ -10,9 +10,9 @@ export function DropdownMenuTrigger({ children }: { children: ReactNode }) { con
 export function DropdownMenuContent({ children, className }: { children: ReactNode; className?: string }) {
   const context = useContext(MenuContext);
   if (!context?.open) return null;
-  return <div className={cn("absolute right-0 top-full z-40 mt-2 min-w-48 rounded-lg border border-[#1F2633] bg-[#0E121A] p-1 shadow-xl", className)} onMouseLeave={() => context.setOpen(false)}>{children}</div>;
+  return <div className={cn("absolute right-0 top-full z-40 mt-2 min-w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-xl", className)} onMouseLeave={() => context.setOpen(false)}>{children}</div>;
 }
 export function DropdownMenuItem({ children, onClick, className }: { children: ReactNode; onClick?: () => void; className?: string }) {
   const context = useContext(MenuContext);
-  return <button type="button" className={cn("w-full rounded-md px-3 py-2 text-left text-sm text-slate-300 hover:bg-white/[0.05]", className)} onClick={() => { onClick?.(); context?.setOpen(false); }}>{children}</button>;
+  return <button type="button" className={cn("w-full rounded-md px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-100", className)} onClick={() => { onClick?.(); context?.setOpen(false); }}>{children}</button>;
 }

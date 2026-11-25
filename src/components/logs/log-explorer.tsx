@@ -15,7 +15,7 @@ export function LogExplorer({ filters, onFiltersChange, logs, loading }: { filte
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between"><LogFilterControls value={filters} onChange={onFiltersChange}/><ExportMenu filters={filters}/></div>
-      {loading ? <div className="h-96 animate-pulse rounded-xl border border-[#1F2633] bg-[#0E121A]"/> : <LogTable logs={logs} onSelect={select}/>}
+      {loading ? <div className="h-96 animate-pulse rounded-xl border border-slate-200 bg-white"/> : <LogTable logs={logs} onSelect={select}/>}
       <LogDetailSheet log={selected} open={sheetOpen} onOpenChange={setSheetOpen}/>
     </div>
   );

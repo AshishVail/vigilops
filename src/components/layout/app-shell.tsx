@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   useWorkspaces();
 
   return (
-    <div className="min-h-screen bg-[#07090D] text-slate-100">
+    <div className="min-h-screen bg-white text-slate-900">
       <AppSidebar />
       <MobileNav />
       <CommandPalette />
