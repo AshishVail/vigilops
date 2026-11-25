@@ -16,7 +16,7 @@ export function ScanForm({ projectId, onScanned }: { projectId: string; onScanne
     onScanned?.(result.id);
   }
   return (
-    <div className="rounded-xl border border-[#1F2633] bg-[#0E121A] p-5">
+    <div className="rounded-xl border border-slate-200 bg-white p-5">
       <div className="space-y-2">
         <Label htmlFor="security-domain">Domain</Label>
         <div className="flex gap-2"><Input id="security-domain" value={domain} onChange={(event)=>setDomain(event.target.value)} placeholder="example.com" className="font-mono text-xs"/><Button onClick={()=>void submit()} disabled={!domain.trim() || scan.isPending}>{scan.isPending ? "Scanning..." : "Run scan"}</Button></div>

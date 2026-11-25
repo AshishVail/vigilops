@@ -39,7 +39,7 @@ export default function NewMonitorPage() {
   if (!projectId) return <div className="p-5 lg:p-8"><EmptyState title="No project found" description="Create a project in workspace settings before adding a monitor."/></div>;
   return (
     <div className="mx-auto max-w-4xl p-5 lg:p-8">
-      <p className="font-mono text-xs uppercase tracking-[0.18em] text-violet-400">New monitor</p>
+      <p className="font-mono text-xs uppercase tracking-[0.18em] text-indigo-700">New monitor</p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight">Configure a live check</h1>
       <Card className="mt-6"><CardHeader><CardTitle>Target configuration</CardTitle></CardHeader><CardContent><MonitorForm projectId={projectId} onSaved={(monitor)=>router.push(`/monitors/${monitor.id}`)} /></CardContent></Card>
     </div>

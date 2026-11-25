@@ -12,10 +12,10 @@ export function UptimeChart({ data }: { data: UptimePoint[] }) {
         {data.length === 0 ? <EmptyState title="No availability data" description="Uptime buckets will appear after checks run." /> : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{top:8,right:8,left:-18,bottom:0}}>
-              <CartesianGrid stroke="#1F2633" strokeDasharray="3 3" vertical={false}/>
+              <CartesianGrid stroke="#E2E8F0" strokeDasharray="3 3" vertical={false}/>
               <XAxis dataKey="time" tickFormatter={(value:string)=>new Date(value).toLocaleDateString([], {month:"short",day:"numeric"})} stroke="#64748b" tick={{fontSize:11}} tickLine={false} axisLine={false}/>
               <YAxis domain={[0,100]} stroke="#64748b" tick={{fontSize:11}} tickLine={false} axisLine={false} unit="%"/>
-              <Tooltip contentStyle={{background:"#0E121A",border:"1px solid #1F2633",borderRadius:8,fontSize:12}} labelFormatter={(value)=>new Date(String(value)).toLocaleString()} formatter={(value) => [`${Number(value).toFixed(2)}%`, "Uptime"]}/>
+              <Tooltip contentStyle={{background:"#FFFFFF",border:"1px solid #E2E8F0",borderRadius:8,fontSize:12}} labelFormatter={(value)=>new Date(String(value)).toLocaleString()} formatter={(value) => [`${Number(value).toFixed(2)}%`, "Uptime"]}/>
               <Line type="stepAfter" dataKey="uptime" stroke="#10B981" strokeWidth={2} dot={false} activeDot={{r:4,fill:"#10B981"}}/>
             </LineChart>
           </ResponsiveContainer>

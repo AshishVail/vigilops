@@ -20,5 +20,5 @@ export function useToast() {
 export function Toaster() {
   const context = useContext(ToastContext);
   if (!context) return null;
-  return <div className="fixed bottom-4 right-4 z-[70] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2">{context.toasts.map((toast) => <div key={toast.id} className={`rounded-lg border p-4 shadow-xl ${toast.variant === "danger" ? "border-rose-500/30 bg-rose-950/90" : toast.variant === "success" ? "border-emerald-500/30 bg-emerald-950/90" : "border-[#1F2633] bg-[#0E121A]"}`}><p className="text-sm font-medium">{toast.title}</p>{toast.description && <p className="mt-1 text-xs text-slate-400">{toast.description}</p>}</div>)}</div>;
+  return <div className="fixed bottom-4 right-4 z-[70] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2">{context.toasts.map((toast) => <div key={toast.id} className={`rounded-lg border p-4 shadow-xl ${toast.variant === "danger" ? "border-rose-500/30 bg-rose-950/90" : toast.variant === "success" ? "border-emerald-500/30 bg-emerald-950/90" : "border-slate-200 bg-white"}`}><p className="text-sm font-medium">{toast.title}</p>{toast.description && <p className="mt-1 text-xs text-slate-600">{toast.description}</p>}</div>)}</div>;
 }

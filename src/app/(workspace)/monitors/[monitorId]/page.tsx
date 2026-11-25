@@ -21,17 +21,17 @@ export default function MonitorDetailPage({ params }: { params: Promise<{ monito
   const logs = history.data?.pages.flatMap((page) => page.items) ?? [];
 
   if (monitor.isLoading) return <div className="mx-auto max-w-[1600px] space-y-5 p-5 lg:p-8"><Skeleton className="h-12 w-72"/><Skeleton className="h-28"/><Skeleton className="h-72"/></div>;
-  if (!monitor.data) return <div className="p-5 lg:p-8"><p className="text-sm text-slate-500">Monitor not found.</p></div>;
+  if (!monitor.data) return <div className="p-5 lg:p-8"><p className="text-sm text-slate-600">Monitor not found.</p></div>;
 
   return (
     <div className="mx-auto max-w-[1600px] space-y-5 p-5 lg:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div><Badge variant={monitor.data.status==="operating"?"success":monitor.data.status==="down"?"danger":monitor.data.status==="degraded"?"warning":"default"}>{monitor.data.status}</Badge><h1 className="mt-3 text-2xl font-semibold tracking-tight">{monitor.data.name}</h1><p className="mt-1 font-mono text-xs text-slate-500">{monitor.data.url}</p></div>
+        <div><Badge variant={monitor.data.status==="operating"?"success":monitor.data.status==="down"?"danger":monitor.data.status==="degraded"?"warning":"default"}>{monitor.data.status}</Badge><h1 className="mt-3 text-2xl font-semibold tracking-tight">{monitor.data.name}</h1><p className="mt-1 font-mono text-xs text-slate-600">{monitor.data.url}</p></div>
         <MonitorActions monitor={monitor.data}/>
       </div>
-      <section className="rounded-xl border border-[#1F2633] bg-[#0E121A] p-5"><div className="mb-4 flex items-center justify-between"><p className="text-sm font-medium">Recent uptime</p><p className="font-mono text-xs text-slate-500">{Math.round(monitor.data.interval_seconds/60)}m interval · {monitor.data.timeout_ms}ms timeout</p></div><UptimeBars logs={logs} count={90}/></section>
+      <section className="rounded-xl border border-slate-200 bg-white p-5"><div className="mb-4 flex items-center justify-between"><p className="text-sm font-medium">Recent uptime</p><p className="font-mono text-xs text-slate-600">{Math.round(monitor.data.interval_seconds/60)}m interval · {monitor.data.timeout_ms}ms timeout</p></div><UptimeBars logs={logs} count={90}/></section>
       <div className="grid gap-4 xl:grid-cols-2"><MonitorStatusChart logs={logs}/><LatencyHistogram logs={logs}/></div>
-      <section><div className="mb-3 flex items-center justify-between"><h2 className="text-sm font-semibold">Ping history</h2>{history.hasNextPage&&<button onClick={()=>history.fetchNextPage()} className="text-xs text-violet-300">Load more</button>}</div><PingHistory logs={logs}/></section>
+      <section><div className="mb-3 flex items-center justify-between"><h2 className="text-sm font-semibold">Ping history</h2>{history.hasNextPage&&<button onClick={()=>history.fetchNextPage()} className="text-xs text-violet-700">Load more</button>}</div><PingHistory logs={logs}/></section>
     </div>
   );
 }

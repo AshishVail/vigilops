@@ -26,10 +26,10 @@ export default function ResetPasswordPage() {
     <div className="w-full max-w-md">
       <h1 className="text-3xl font-semibold tracking-tight">Choose a new password</h1>
       <form onSubmit={submit} className="mt-8 space-y-4">
-        <label className="block text-sm text-slate-300">New password<input required minLength={8} type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="mt-2 w-full rounded-lg border border-[#1F2633] bg-[#0E121A] px-3 py-2.5 outline-none focus:border-violet-500" /></label>
-        <label className="block text-sm text-slate-300">Confirm password<input required minLength={8} type="password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="mt-2 w-full rounded-lg border border-[#1F2633] bg-[#0E121A] px-3 py-2.5 outline-none focus:border-violet-500" /></label>
-        {error && <p role="alert" className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
-        <button className="w-full rounded-lg bg-[#7C3AED] px-4 py-2.5 text-sm font-semibold text-white">Update password</button>
+        <label className="block text-sm text-slate-600">New password<input required minLength={8} type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-violet-500" /></label>
+        <label className="block text-sm text-slate-600">Confirm password<input required minLength={8} type="password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-violet-500" /></label>
+        {error && <p role="alert" className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-700">{error}</p>}
+        <button className="w-full rounded-lg bg-[#6366F1] px-4 py-2.5 text-sm font-semibold text-white">Update password</button>
       </form>
     </div>
   );

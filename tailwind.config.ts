@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,14 +14,14 @@ const config: Config = {
     },
     extend: {
       colors: {
-        obsidian: "#07090D",
-        elevated: "#0E121A",
-        border: "#1F2633",
-        violet: "#7C3AED",
-        cyan: "#06B6D4",
+        obsidian: "#FFFFFF",
+        elevated: "#F8FAFC",
+        border: "#E2E8F0",
+        violet: "#6366F1",
+        cyan: "#0891B2",
         emerald: "#10B981",
         amber: "#F59E0B",
-        rose: "#F43F5E",
+        rose: "#EF4444",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: "hsl(var(--card))",
@@ -48,7 +47,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       boxShadow: {
-        "violet-glow": "0 0 30px rgba(124,58,237,0.18)",
+        "violet-glow": "0 8px 24px rgba(79,70,229,0.14)",
       },
       keyframes: {
         pulseStatus: {

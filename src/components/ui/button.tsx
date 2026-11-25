@@ -13,11 +13,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type={type}
       className={cn(
         "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
-        variant === "default" && "bg-[#7C3AED] text-white hover:bg-[#8B5CF6]",
-        variant === "secondary" && "bg-[#181C27] text-slate-100 hover:bg-[#222738]",
-        variant === "outline" && "border border-[#1F2633] bg-[#0E121A] text-slate-200 hover:border-[#30384a]",
-        variant === "ghost" && "text-slate-300 hover:bg-white/[0.05] hover:text-white",
-        variant === "danger" && "bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20",
+        variant === "default" && "bg-[#6366F1] text-white hover:bg-[#4F46E5]",
+        variant === "secondary" && "bg-indigo-600 text-white hover:bg-indigo-700",
+        variant === "outline" && "border border-slate-200 bg-white text-slate-800 hover:border-slate-300",
+        variant === "ghost" && "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+        variant === "danger" && "bg-rose-500/10 text-rose-700 border border-rose-500/20 hover:bg-rose-500/20",
         size === "sm" && "h-8 px-3 text-xs",
         size === "md" && "h-9 px-4 text-sm",
         size === "lg" && "h-11 px-5 text-sm",

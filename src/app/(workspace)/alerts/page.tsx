@@ -9,6 +9,8 @@ import { AlertChannelList } from "@/components/alerts/alert-channel-list";
 import { AlertDeliveryLog } from "@/components/alerts/alert-delivery-log";
 import type { AlertDelivery } from "@/lib/types/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 
 export default function AlertsPage() {
   const workspaceId = useWorkspaceStore((state) => state.workspaceId);
@@ -36,7 +38,7 @@ export default function AlertsPage() {
   if (!workspaceId) return <div className="p-5 lg:p-8"><Skeleton className="h-96"/></div>;
   return (
     <div className="mx-auto max-w-[1600px] space-y-8 p-5 lg:p-8">
-      <div><p className="font-mono text-xs uppercase tracking-[0.18em] text-violet-400">Notifications</p><h1 className="mt-2 text-2xl font-semibold tracking-tight">Alert channels</h1></div>
+      <div className="flex items-end justify-between gap-4"><div><p className="font-mono text-xs uppercase tracking-[0.18em] text-indigo-700">Notifications</p><h1 className="mt-2 text-2xl font-semibold tracking-tight">Alert channels</h1></div><Button variant="outline" onClick={() => void channels.refetch()} disabled={channels.isFetching}><RefreshCw className={`h-3.5 w-3.5 ${channels.isFetching ? "animate-spin" : ""}`} />Refresh</Button></div>
       <div className="grid gap-5 xl:grid-cols-[420px_1fr]">
         <AlertChannelForm workspaceId={workspaceId} projectId={projectId} onCreated={() => void channels.refetch()}/>
         {channels.isLoading ? <Skeleton className="h-64"/> : <AlertChannelList channels={channels.data ?? []} onChanged={() => void channels.refetch()}/>}

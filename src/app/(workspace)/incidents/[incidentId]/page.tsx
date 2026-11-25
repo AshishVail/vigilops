@@ -9,6 +9,6 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ incid
   const { incidentId } = use(params);
   const incident = useIncident(incidentId);
   if (incident.isLoading) return <div className="p-5 lg:p-8"><Skeleton className="h-96"/></div>;
-  if (!incident.data) return <div className="p-5 lg:p-8 text-sm text-slate-500">Incident not found.</div>;
+  if (!incident.data) return <div className="p-5 lg:p-8 text-sm text-slate-600">Incident not found.</div>;
   return <div className="mx-auto max-w-[1600px] p-5 lg:p-8"><IncidentDetail incident={incident.data.incident} updates={incident.data.updates}/></div>;
 }

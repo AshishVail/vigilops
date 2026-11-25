@@ -71,7 +71,7 @@ export function MonitorForm({ projectId, monitor, onSaved }: MonitorFormProps) {
         <div className="space-y-2"><Label htmlFor="monitor-statuses">Expected status codes</Label><Input id="monitor-statuses" value={expectedStatusCodes} onChange={(event) => setExpectedStatusCodes(event.target.value)} placeholder="200, 201, 204" /></div>
       </div>
       <div className="space-y-2"><Label htmlFor="monitor-headers">Custom headers (JSON)</Label><Textarea id="monitor-headers" value={headers} onChange={(event) => setHeaders(event.target.value)} className="min-h-28 font-mono text-xs" /></div>
-      {error && <p role="alert" className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
+      {error && <p role="alert" className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-700">{error}</p>}
       <div className="flex justify-end"><Button type="submit" disabled={pending}>{pending ? "Saving..." : monitor ? "Save monitor" : "Create monitor"}</Button></div>
     </form>
   );

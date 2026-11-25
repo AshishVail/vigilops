@@ -25,10 +25,10 @@ export default function AiDoctorPage() {
 
   return (
     <div className="mx-auto max-w-[1600px] space-y-5 p-5 lg:p-8">
-      <div><p className="font-mono text-xs uppercase tracking-[0.18em] text-violet-400">Groq powered</p><h1 className="mt-2 text-2xl font-semibold tracking-tight">AI Incident Doctor</h1></div>
+      <div><p className="font-mono text-xs uppercase tracking-[0.18em] text-indigo-700">Groq powered</p><h1 className="mt-2 text-2xl font-semibold tracking-tight">AI Incident Doctor</h1></div>
       <div className="grid gap-5 xl:grid-cols-[380px_1fr]">
         <div className="space-y-4">
-          <section className="rounded-xl border border-[#1F2633] bg-[#0E121A] p-5">
+          <section className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="space-y-4">
               <div className="space-y-2"><Label>Evidence context</Label><Select value={context} onChange={(event)=>setContext(event.target.value as DiagnosisContext)}><option value="incident">Incident</option><option value="monitor">Monitor</option><option value="api">API run</option><option value="security">Security scan</option></Select></div>
               <div className="space-y-2"><Label>Reference ID</Label><Input value={referenceId} onChange={(event)=>setReferenceId(event.target.value)} placeholder="UUID" className="font-mono text-xs"/></div>

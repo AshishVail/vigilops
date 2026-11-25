@@ -6,11 +6,11 @@ export function Badge({ className, variant = "default", ...props }: HTMLAttribut
     <span
       className={cn(
         "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
-        variant === "default" && "border-[#1F2633] bg-white/[0.03] text-slate-300",
-        variant === "success" && "border-emerald-500/20 bg-emerald-500/10 text-emerald-300",
-        variant === "warning" && "border-amber-500/20 bg-amber-500/10 text-amber-300",
-        variant === "danger" && "border-rose-500/20 bg-rose-500/10 text-rose-300",
-        variant === "violet" && "border-violet-500/20 bg-violet-500/10 text-violet-300",
+        variant === "default" && "border-slate-200 bg-slate-50 text-slate-600",
+        variant === "success" && "border-emerald-500/20 bg-emerald-500/10 text-emerald-700",
+        variant === "warning" && "border-amber-500/20 bg-amber-500/10 text-amber-700",
+        variant === "danger" && "border-rose-500/20 bg-rose-500/10 text-rose-700",
+        variant === "violet" && "border-violet-500/20 bg-violet-500/10 text-violet-700",
         className,
       )}
       {...props}

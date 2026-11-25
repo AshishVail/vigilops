@@ -113,7 +113,7 @@ export default function WorkspaceMembersPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-5 lg:p-8">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-violet-400">Access control</p>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-indigo-700">Access control</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">Workspace members</h1>
       </div>
 
@@ -130,9 +130,9 @@ export default function WorkspaceMembersPage() {
         <CardHeader><CardTitle>Members</CardTitle><CardDescription>{loading ? "Loading workspace access..." : `${members.length} workspace member${members.length === 1 ? "" : "s"}`}</CardDescription></CardHeader>
         <CardContent className="space-y-2">
           {members.map((member) => (
-            <div key={member.user_id} className="flex flex-col gap-3 rounded-lg border border-[#1F2633] p-3 sm:flex-row sm:items-center">
+            <div key={member.user_id} className="flex flex-col gap-3 rounded-lg border border-slate-200 p-3 sm:flex-row sm:items-center">
               <Avatar name={member.profile?.full_name ?? member.profile?.email ?? "VigilOps member"} src={member.profile?.avatar_url ?? undefined} />
-              <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{member.profile?.full_name ?? "VigilOps member"}</p><p className="truncate text-xs text-slate-500">{member.profile?.email ?? member.user_id}</p></div>
+              <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{member.profile?.full_name ?? "VigilOps member"}</p><p className="truncate text-xs text-slate-600">{member.profile?.email ?? member.user_id}</p></div>
               {member.role === "owner" ? (
                 <Badge variant="violet">Owner</Badge>
               ) : (
@@ -143,7 +143,7 @@ export default function WorkspaceMembersPage() {
               )}
             </div>
           ))}
-          {!loading && members.length === 0 && <p className="py-8 text-center text-sm text-slate-500">No workspace members found.</p>}
+          {!loading && members.length === 0 && <p className="py-8 text-center text-sm text-slate-600">No workspace members found.</p>}
         </CardContent>
       </Card>
     </div>
