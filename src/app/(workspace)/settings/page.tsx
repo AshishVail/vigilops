@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useWorkspaces, useWorkspace, useUpdateWorkspace, useDeleteWorkspace } from "@/hooks/use-workspace";
+import { useEffect, useState, type FormEvent } from "react";
+import { useWorkspaces, useWorkspace, useUpdateWorkspace, useDeleteWorkspace, useCreateWorkspace } from "@/hooks/use-workspace";
 import { useWorkspaceStore } from "@/stores/workspace-store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,9 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function WorkspaceSettingsPage() {
-  useWorkspaces();
+  const workspaces = useWorkspaces();
   const workspaceId = useWorkspaceStore((state) => state.workspaceId);
   const workspaceQuery = useWorkspace(workspaceId);
   const updateWorkspace = useUpdateWorkspace();
@@ -29,14 +30,36 @@ export default function WorkspaceSettingsPage() {
     }
   }, [workspaceQuery.data]);
 
-  if (!workspaceId || workspaceQuery.isLoading) {
+  if (workspaces.isLoading || (workspaces.data?.length && !workspaceId) || (workspaceId && workspaceQuery.isLoading)) {
     return <SettingsSkeleton />;
+  }
+
+  if (workspaces.error) {
+    return (
+      <div className="mx-auto max-w-5xl p-5 lg:p-8">
+        <EmptyState title="Workspaces unavailable" description={workspaces.error instanceof Error ? workspaces.error.message : "Unable to load your workspaces."} action={<Button variant="outline" onClick={() => void workspaces.refetch()}>Retry</Button>} />
+      </div>
+    );
+  }
+
+  if (workspaces.isSuccess && workspaces.data.length === 0) {
+    return <CreateFirstWorkspace />;
+  }
+
+  if (!workspaceId) return <SettingsSkeleton />;
+
+  if (workspaceQuery.error) {
+    return (
+      <div className="mx-auto max-w-5xl p-5 lg:p-8">
+        <EmptyState title="Workspace unavailable" description={workspaceQuery.error instanceof Error ? workspaceQuery.error.message : "Unable to load workspace settings."} action={<Button variant="outline" onClick={() => void workspaceQuery.refetch()}>Retry</Button>} />
+      </div>
+    );
   }
 
   if (!workspaceQuery.data) {
     return (
       <div className="mx-auto max-w-5xl p-5 lg:p-8">
-        <Card><CardHeader><CardTitle>No workspace selected</CardTitle><CardDescription>Create or join a workspace to manage settings.</CardDescription></CardHeader></Card>
+        <EmptyState title="Workspace unavailable" description="Your selected workspace is not available. Choose another workspace or create one." />
       </div>
     );
   }
@@ -81,6 +104,35 @@ export default function WorkspaceSettingsPage() {
       )}
 
       <ConfirmDialog open={confirmDelete} onOpenChange={setConfirmDelete} title="Delete workspace" description="This action cannot be undone. Demo workspaces cannot be deleted directly." confirmLabel="Delete workspace" destructive onConfirm={() => { if (workspaceId) deleteWorkspace.mutate(workspaceId); }} />
+    </div>
+  );
+}
+
+function CreateFirstWorkspace() {
+  const createWorkspace = useCreateWorkspace();
+  const [name, setName] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    createWorkspace.mutate({ name });
+  }
+
+  return (
+    <div className="mx-auto max-w-5xl space-y-6 p-5 lg:p-8">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-violet-400">Workspace</p>
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight">Create your workspace</h1>
+      </div>
+      <Card>
+        <CardHeader><CardTitle>Get started</CardTitle><CardDescription>Create a workspace to organize projects, monitors, and incidents.</CardDescription></CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2"><Label htmlFor="new-workspace-name">Workspace name</Label><Input id="new-workspace-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Acme Production" minLength={2} maxLength={60} required /></div>
+            {createWorkspace.error && <p role="alert" className="text-sm text-rose-300">{createWorkspace.error.message}</p>}
+            <div className="flex justify-end"><Button type="submit" disabled={createWorkspace.isPending}>{createWorkspace.isPending ? "Creating..." : "Create workspace"}</Button></div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -16,7 +16,13 @@ export async function GET(request: NextRequest) {
     return errorJson("Invalid projectId", 400, "VALIDATION_ERROR");
   }
 
-  const access = await requireWorkspace(workspaceId);
+  let access: Awaited<ReturnType<typeof requireWorkspace>>;
+  try {
+    access = await requireWorkspace(workspaceId);
+  } catch (error) {
+    return errorJson(error instanceof Error ? error.message : "Unable to verify workspace access", 500, "WORKSPACE_ACCESS_FAILED");
+  }
+
   if (!access) {
     const auth = await import("@/lib/auth/require-auth").then((module) => module.requireAuth());
     if (!auth) return unauthorizedJson();

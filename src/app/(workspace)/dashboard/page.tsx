@@ -14,8 +14,12 @@ import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { IncidentTimeline } from "@/components/dashboard/incident-timeline";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useWorkspaces } from "@/hooks/use-workspace";
 
 export default function DashboardPage() {
+  const workspaces = useWorkspaces();
   const workspaceId = useWorkspaceStore((state) => state.workspaceId);
   const projectId = useWorkspaceStore((state) => state.projectId);
   const [range, setRange] = useState<DashboardRange>("24h");
@@ -36,18 +40,42 @@ export default function DashboardPage() {
         <DateRangeFilter value={range} onChange={setRange} />
       </div>
 
-      {query.isLoading && (
+      {workspaces.isLoading && (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[0,1,2,3].map((item)=><Skeleton key={item} className="h-28"/>)}</div>
+      )}
+
+      {workspaces.error && (
+        <EmptyState
+          title="Workspaces unavailable"
+          description={workspaces.error instanceof Error ? workspaces.error.message : "Unable to load your workspaces."}
+          action={<Button variant="outline" onClick={() => void workspaces.refetch()}>Retry</Button>}
+        />
+      )}
+
+      {workspaces.isSuccess && workspaces.data.length === 0 && (
+        <EmptyState
+          title="Create your first workspace"
+          description="A workspace is needed to organize projects, monitors, and incidents."
+          action={<Link href="/settings"><Button>Open workspace settings</Button></Link>}
+        />
+      )}
+
+      {workspaces.isSuccess && workspaces.data.length > 0 && !workspaceId && (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[0,1,2,3].map((item)=><Skeleton key={item} className="h-28"/>)}</div>
+      )}
+
+      {workspaceId && query.isLoading && (
         <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[0,1,2,3].map((item)=><Skeleton key={item} className="h-28"/>)}</div>
           <div className="grid gap-4 xl:grid-cols-2">{[0,1].map((item)=><Skeleton key={item} className="h-[340px]"/>)}</div>
         </div>
       )}
 
-      {query.error && (
+      {workspaceId && query.error && (
         <EmptyState title="Dashboard unavailable" description={query.error instanceof Error ? query.error.message : "Unable to load operational data."} />
       )}
 
-      {query.data && (
+      {workspaceId && query.data && (
         <>
           <KpiGrid data={query.data} />
           <div className="grid gap-4 xl:grid-cols-2">
